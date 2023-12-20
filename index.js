@@ -28,6 +28,12 @@ app.get('/', (request, response) => {
     response.send('<h1>Hello World!</h1>')
 })
 
+app.get('/info', (request, response) => {
+    response.write(`<p>Phonebook has info for ${persons.length} people</p>`)
+    response.write(`<p>${Date()}</p>`)
+    response.end()
+})
+
 app.get('/api/persons', (request, response) => {
     response.json(persons)
 })
