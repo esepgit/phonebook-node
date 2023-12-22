@@ -5,6 +5,6 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name": "Patrick Star",
-    "number": 34534
+    "name": "Spongebob Squarepants",
+    "number": 345342342
 }
