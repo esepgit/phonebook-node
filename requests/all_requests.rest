@@ -8,3 +8,6 @@ Content-Type: application/json
     "name": "Spongebob Squarepants",
     "number": 345342342
 }
+
+###
+GET http://localhost:3001/info

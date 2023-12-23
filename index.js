@@ -40,10 +40,13 @@ let persons = [
     }  
 ]
 
-app.get('/info', (request, response) => {
-    response.write(`<p>Phonebook has info for ${persons.length} people</p>`)
-    response.write(`<p>${Date()}</p>`)
-    response.end()
+app.get('/info', (request, response, next) => {
+    Person.countDocuments({}).then(count => {
+        response.write(`<p>Phonebook has info for ${count} people</p>`)
+        response.write(`<p>${Date()}</p>`)
+        response.end()
+    })
+    .catch(error => next(error))
 })
 
 app.get('/api/persons', (request, response, next) => {
