@@ -71,7 +71,11 @@ app.get('/api/persons/:id', (request, response, next) => {
 app.delete('/api/persons/:id', (request, response, next) => {
     Person.findByIdAndDelete(request.params.id)
         .then(result => {
-            response.status(204).end()
+            if(result) {
+                response.status(204).end()
+            } else {
+                response.status(404).end('error: name does not exist in the database') 
+            }     
         })
         .catch(error => next(error))
 })
@@ -83,13 +87,6 @@ app.post('/api/persons', (request, response, next) => {
        return response.status(400).json({error: 'name or number missing'}) 
     } 
 
-    // const name = persons.find(element => element.name === body.name)
-
-    // if(name) {
-    //     return response.status(400).json({
-    //         error: 'name must be unique'
-    //     })
-    // }
     const person = new Person({
             name: body.name,
             number: body.number
@@ -109,9 +106,13 @@ app.put('/api/persons/:id', (request, response, next) => {
         number: body.number,
     }
 
-    Person.findByIdAndUpdate(request.params.id, person, { new: true })
+    Person.findByIdAndUpdate(request.params.id, person, { new: true, runValidators: true })
         .then(updatedPerson => {
-            response.json(updatedPerson)
+            if(updatedPerson) {
+                response.json(updatedPerson)
+            } else {
+                response.status(404).end('error: name does not exist in the database') 
+            }
         })
         .catch(error => next(error))
 })
@@ -122,7 +123,7 @@ const errorHandler = (error, request, response, next) => {
     if(error.name === 'CastError') {
         return response.status(400).send({ error: 'malformatted id'} )
     } else if(error.name === 'ValidationError') {
-        return response.status(400).send({ error: 'name must be unique' })
+        return response.status(400).send(error.message)
     }
     next(error)
 }
