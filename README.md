@@ -1,4 +1,4 @@
-# JavaScript + Node + Express + React
+# JavaScript + Node + Express + React + Mongo
 
-A phonebook, DB implemented with Node + Express, frontEnd with React
+A phonebook, DB Cloud Mongo, frontEnd React, backend + frontend dist in PaaS
 live app in: https://zany-jade-gharial-veil.cyclic.app/
