@@ -7,7 +7,7 @@ const Person = require('./models/person')
 
 app.use(express.json())
 
-morgan.token('data', (request, response) => {
+morgan.token('data', (request) => {
     if(request.method === "POST") {
         return JSON.stringify(request.body)
     }
@@ -16,29 +16,6 @@ morgan.token('data', (request, response) => {
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'))
 app.use(cors())
 app.use(express.static('dist'))
-
-let persons = [
-    {
-        id: 1,
-        name: "Arto Hellas", 
-        number: "040-12314"
-    },
-    {
-        id: 2,
-        name: "Juan Perez",
-        number: "234232342"
-    },
-    {
-        id: 3,
-        name: "Piripao Rodriguez",
-        number: "234234234"
-    },
-    {
-        id: 4,
-        name: "Mary Poppins",
-        number: "2342342-3443"
-    }  
-]
 
 app.get('/info', (request, response, next) => {
     Person.countDocuments({}).then(count => {
